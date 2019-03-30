@@ -18,6 +18,7 @@ from .model_training import *
 from .utils import *
 import csv
 import re
+from keras_tqdm import TQDMNotebookCallback
 
 
 class textgenrnn:
@@ -102,7 +103,7 @@ class textgenrnn:
     def train_on_texts(self, texts, context_labels=None,
                        batch_size=128,
                        num_epochs=50,
-                       verbose=1,
+                       verbose=0,
                        new_model=False,
                        gen_epochs=1,
                        train_size=1.0,
@@ -217,7 +218,8 @@ class textgenrnn:
                                       max_gen_length),
                                   save_model_weights(
                                       self, num_epochs,
-                                      save_epochs)],
+                                      save_epochs),
+                                  TQDMNotebookCallback()],
                               verbose=verbose,
                               max_queue_size=10,
                               validation_data=gen_val,
